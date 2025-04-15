@@ -1,1 +1,46 @@
-r
+import capos.*
+
+
+describe "Test de rolando"{
+
+    test "Rolando sin nada encuentra una espada, un hechizo y un collar, solo toma los 2 primeros"{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        assert.equals(#{espada,libro}, rolando.artefactos())
+        rolando.encuentra(collar)
+        assert.equals(#{espada,libro}, rolando.artefactos())
+    }
+
+    test "encuentra espada, libro, va al castillo y luego encuentra un collar y vuelve al castillo "{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.irALaMorada()
+        assert.equals(#{espada,libro}, castillo.baul())
+        rolando.encuentra(collar)
+        rolando.irALaMorada()
+        assert.equals(#{espada,libro,collar}, castillo.baul())
+        assert.equals(#{}, rolando.artefactos())
+    }
+
+    test "posee una espada, un libro en el castillo y el tiene un collar "{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.irALaMorada()
+        assert.equals(#{espada,libro}, castillo.baul())
+        rolando.encuentra(collar)
+        assert.equals(#{espada,libro,collar}, rolando.posee())
+        assert.equals(#{collar}, rolando.artefactos())
+    }    
+
+
+    test "test de historial, encuentra espada, libro, collar, armadura y collar"{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.encuentra(collar)
+        rolando.irALaMorada()
+        rolando.encuentra(armadura)
+        rolando.encuentra(collar)
+        assert.equals([espada,libro,collar,armadura,collar], rolando.historial())
+    }      
+
+}
